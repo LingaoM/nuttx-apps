@@ -1,0 +1,9 @@
+############################################################################
+# apps/examples/hostfs_longpath/Make.defs
+#
+# SPDX-License-Identifier: Apache-2.0
+############################################################################
+
+ifneq ($(CONFIG_EXAMPLES_HOSTFS_LONGPATH),)
+CONFIGURED_APPS += $(APPDIR)/examples/hostfs_longpath
+endif

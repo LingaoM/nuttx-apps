@@ -1,0 +1,31 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config EXAMPLES_HOSTFS_LONGPATH
+	tristate "Hostfs long root path regression test"
+	default n
+	depends on FS_HOSTFS
+	---help---
+		Enable a small hostfs regression test that mounts a long host root
+		path and verifies relative file paths are appended correctly.
+
+if EXAMPLES_HOSTFS_LONGPATH
+
+config EXAMPLES_HOSTFS_LONGPATH_PROGNAME
+	string "Program name"
+	default "hostfs_longpath"
+	---help---
+		This is the name of the program that will be used when the NSH ELF
+		program is installed.
+
+config EXAMPLES_HOSTFS_LONGPATH_PRIORITY
+	int "Hostfs long root test task priority"
+	default 100
+
+config EXAMPLES_HOSTFS_LONGPATH_STACKSIZE
+	int "Hostfs long root test stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif
