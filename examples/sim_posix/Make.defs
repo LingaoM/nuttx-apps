@@ -1,0 +1,9 @@
+############################################################################
+# apps/examples/sim_posix/Make.defs
+#
+# SPDX-License-Identifier: Apache-2.0
+############################################################################
+
+ifneq ($(CONFIG_EXAMPLES_SIM_POSIX),)
+CONFIGURED_APPS += $(APPDIR)/examples/sim_posix
+endif

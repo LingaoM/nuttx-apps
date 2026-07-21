@@ -1,0 +1,37 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config EXAMPLES_SIM_POSIX
+	tristate "Sim POSIX regression test"
+	default n
+	depends on ARCH_SIM
+	depends on FS_HOSTFS
+	depends on LIBC_NETDB
+	depends on NET && NET_USRSOCK && SIM_NETUSRSOCK
+	depends on NET_SOCKOPTS && NET_USRSOCK_TCP
+	depends on PATH_MAX >= 384
+	depends on !NET_LOCAL
+	---help---
+		Enable a sim regression test for POSIX APIs backed by hostfs,
+		netdb, and sim usrsock.
+
+if EXAMPLES_SIM_POSIX
+
+config EXAMPLES_SIM_POSIX_PROGNAME
+	string "Program name"
+	default "sim_posix"
+	---help---
+		This is the name of the program that will be used when the NSH ELF
+		program is installed.
+
+config EXAMPLES_SIM_POSIX_PRIORITY
+	int "Sim POSIX test task priority"
+	default 100
+
+config EXAMPLES_SIM_POSIX_STACKSIZE
+	int "Sim POSIX test stack size"
+	default 8192
+
+endif
