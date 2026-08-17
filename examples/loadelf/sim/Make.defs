@@ -1,0 +1,23 @@
+############################################################################
+# apps/examples/loadelf/sim/Make.defs
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# Loadelf NuttX sim configuration.  Reuse the upstream NuttX sim board rules.
+############################################################################
+
+include $(TOPDIR)/boards/sim/sim/sim/scripts/Make.defs
+
+SYMTABEXT += -a $(APPDIR)/examples/loadelf/symbols.txt
+
+ifeq ($(CONFIG_SIM_TOOLCHAIN_CLANG),y)
+  CC = clang-14
+  CXX = clang++-14
+  CPP = clang-14 -E -P -x c
+  LD = ld.lld-14
+  STRIP = llvm-strip-14 --strip-unneeded
+  AR = llvm-ar-14 rcs
+  NM = llvm-nm-14
+  OBJCOPY = llvm-objcopy-14
+  OBJDUMP = llvm-objdump-14
+endif

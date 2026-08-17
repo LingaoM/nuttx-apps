@@ -1,0 +1,39 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+menuconfig EXAMPLES_LOADELF
+	tristate "Loadable ELF examples"
+	default n
+	---help---
+		Enable support files and tests for loadable ELF examples.
+
+if EXAMPLES_LOADELF
+
+config EXAMPLES_LOADELF_MIIO_BT_BUILTIN
+	bool "Register miio_bt static library as a builtin app"
+	default n
+	depends on NSH_BUILTIN_APPS
+	---help---
+		Register an externally built miio_bt static library as the NSH
+		builtin command "miio_bt". The library must export miio_bt_main().
+
+config EXAMPLES_LOADELF_MIIO_BT_LIB
+	string "miio_bt static library path"
+	default "/home/mi/works/gitlab/miio_bt_builder/platforms/midc/libmiio_bt.a"
+	depends on EXAMPLES_LOADELF_MIIO_BT_BUILTIN
+	---help---
+		Absolute or build-relative path to libmiio_bt.a.
+
+config EXAMPLES_LOADELF_MIIO_BT_PRIORITY
+	int "miio_bt task priority"
+	default 100
+	depends on EXAMPLES_LOADELF_MIIO_BT_BUILTIN
+
+config EXAMPLES_LOADELF_MIIO_BT_STACKSIZE
+	int "miio_bt stack size"
+	default DEFAULT_TASK_STACKSIZE
+	depends on EXAMPLES_LOADELF_MIIO_BT_BUILTIN
+
+endif

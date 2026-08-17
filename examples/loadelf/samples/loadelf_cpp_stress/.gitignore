@@ -1,0 +1,3 @@
+/loadelf_cpp_stress
+*.o
+/build/

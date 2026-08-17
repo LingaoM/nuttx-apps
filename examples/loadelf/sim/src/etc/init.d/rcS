@@ -1,0 +1,12 @@
+/****************************************************************************
+ * examples/loadelf/sim/src/etc/init.d/rcS
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ****************************************************************************/
+
+#include <nuttx/config.h>
+
+#ifdef CONFIG_FS_HOSTFS
+mkdir /tmp
+mount -t hostfs -o fs=/tmp /tmp
+#endif

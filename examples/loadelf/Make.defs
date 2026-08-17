@@ -1,0 +1,11 @@
+############################################################################
+# apps/examples/loadelf/Make.defs
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+############################################################################
+
+ifeq ($(CONFIG_EXAMPLES_LOADELF_MIIO_BT_BUILTIN),y)
+CONFIGURED_APPS += $(APPDIR)/examples/loadelf/miio_bt_builtin
+EXTRA_LIBS += $(patsubst "%",%,$(CONFIG_EXAMPLES_LOADELF_MIIO_BT_LIB))
+endif
