@@ -5,7 +5,14 @@
 #
 ############################################################################
 
-NUTTX_EXPORT ?= $(abspath ../nuttx-export)
+ifndef NUTTX_EXPORT
+ifdef VELA_LOADELF_SDK
+NUTTX_EXPORT := $(abspath $(VELA_LOADELF_SDK)/nuttx-export)
+else
+$(error NUTTX_EXPORT is not set; source the loadelf SDK env.sh first)
+endif
+endif
+
 INSTALL_DIR  ?= $(abspath ../../../bin)
 SYMBOLS      ?= $(abspath ../symbols.txt)
 
@@ -26,9 +33,11 @@ install: $(addprefix install-,$(SAMPLE_DIRS))
 symbols: install
 	@tmp="$(SYMBOLS).tmp"; \
 	export LC_ALL=C; \
-	$(NM) -u $(SAMPLE_BINS) 2>/dev/null | \
-		awk '$$1 == "U" || $$1 == "w" || $$1 == "v" { print $$2 }' | \
-		sort -u > "$$tmp"; \
+	{ \
+		if [ -f "$(SYMBOLS)" ]; then cat "$(SYMBOLS)"; fi; \
+		$(NM) -u $(SAMPLE_BINS) 2>/dev/null | \
+			awk '$$1 == "U" || $$1 == "w" || $$1 == "v" { print $$2 }'; \
+	} | sort -u > "$$tmp"; \
 	mv "$$tmp" "$(SYMBOLS)"; \
 	echo "Generated $(SYMBOLS) from $(words $(SAMPLE_BINS)) samples"
 

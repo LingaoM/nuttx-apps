@@ -186,6 +186,8 @@ getcwd
 getifaddrs
 getopt_long
 getoptargp
+getopterrp
+getoptindp
 getpid
 getsockopt
 gettid

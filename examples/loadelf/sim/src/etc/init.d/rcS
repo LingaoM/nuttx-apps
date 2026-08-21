@@ -8,5 +8,5 @@
 
 #ifdef CONFIG_FS_HOSTFS
 mkdir /tmp
-mount -t hostfs -o fs=/tmp /tmp
+mount -t hostfs -o fs=. /tmp
 #endif

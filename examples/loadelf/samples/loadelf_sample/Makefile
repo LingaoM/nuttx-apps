@@ -5,9 +5,16 @@
 #
 ############################################################################
 
-NUTTX_EXPORT ?= $(abspath ../../nuttx-export)
+ifndef NUTTX_EXPORT
+ifdef VELA_LOADELF_SDK
+NUTTX_EXPORT := $(abspath $(VELA_LOADELF_SDK)/nuttx-export)
+else
+$(error NUTTX_EXPORT is not set; source the loadelf SDK env.sh first)
+endif
+endif
+
 INSTALL_DIR  ?= $(abspath ../../../../bin)
-SYMBOLS      ?= $(abspath ../../../../symtab_apps.c)
+SYMBOLS      ?= $(abspath ../../symbols.txt)
 READELF      ?= readelf
 
 include $(NUTTX_EXPORT)/scripts/Make.defs

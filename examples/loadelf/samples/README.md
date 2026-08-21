@@ -1,7 +1,8 @@
 # Loadable ELF Samples
 
 These samples build loadable NuttX ELF modules outside the NuttX apps build
-framework.  They use the full SDK exported by `make export`.
+framework.  They use the self-contained loadelf SDK toolchain, which already
+contains the NuttX export headers and linker script.
 
 The samples use the compiler and linker settings recorded by `make export`.
 Override `CC=...`, `CXX=...`, or `LD=...` on the make command line to use
@@ -14,31 +15,26 @@ exports the C++ symbols needed by the loadable ELF.  The sample also declares
 its own `nx_stacksize` ELF symbol because it needs more stack than the default
 loadable ELF stack.
 
-From the NuttX tree:
+Prepare a NuttX runner first:
 
 ```sh
 make distclean
 ./tools/configure.sh -l ../nuttx-apps/examples/loadelf/sim
 make -j16
-make export
-loadelf_dir=../nuttx-apps/examples/loadelf
-rm -rf "$loadelf_dir/nuttx-export"
-export_tarball=$(ls -t nuttx-export-*.tar.gz | head -n1)
-tar -xzf "$export_tarball" -C "$loadelf_dir"
-mv "$loadelf_dir/${export_tarball%.tar.gz}" \
-  "$loadelf_dir/nuttx-export"
 ```
 
 Build and install all samples, then regenerate `../symbols.txt` from their
 undefined symbols:
 
 ```sh
+source /path/to/toolchain-x86_64-vela-sim-loadelf-nuttx-13.0.1-rc0/env.sh
 make -C ../nuttx-apps/examples/loadelf/samples
 ```
 
 Run sample checks:
 
 ```sh
+source /path/to/toolchain-x86_64-vela-sim-loadelf-nuttx-13.0.1-rc0/env.sh
 make -C ../nuttx-apps/examples/loadelf/samples check
 ```
 
